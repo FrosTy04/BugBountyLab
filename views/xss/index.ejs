@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-bug"></i> Bug Bounty Lab
+            </a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="/">Dashboard</a>
+                <% if (user) { %>
+                    <span class="navbar-text me-3">Welcome, <%= user.username %>!</span>
+                    <a class="nav-link" href="/auth/logout">Logout</a>
+                <% } else { %>
+                    <a class="nav-link" href="/auth/login">Login</a>
+                <% } %>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="jumbotron bg-warning text-dark p-5 rounded mb-4">
+                    <h1 class="display-4">
+                        <i class="fas fa-code"></i> Cross-Site Scripting (XSS) Lab
+                    </h1>
+                    <p class="lead">Practice various XSS attack techniques in a controlled environment.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="alert alert-info">
+                    <h4><i class="fas fa-info-circle"></i> Learning Objectives</h4>
+                    <ul class="mb-0">
+                        <li>Understand different types of XSS vulnerabilities</li>
+                        <li>Learn payload construction and encoding techniques</li>
+                        <li>Practice filter bypass methods</li>
+                        <li>Understand the impact of XSS attacks</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6 col-xl-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-header bg-danger text-white">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-bolt"></i> Reflected XSS
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Practice reflected XSS attacks where malicious scripts are reflected from the server.</p>
+                        <div class="mb-3">
+                            <strong>Techniques:</strong>
+                            <div class="mt-1">
+                                <span class="badge bg-light text-dark me-1 mb-1">URL Parameters</span>
+                                <span class="badge bg-light text-dark me-1 mb-1">Form Input</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <a href="/xss/reflected" class="btn btn-outline-danger w-100">
+                            <i class="fas fa-play"></i> Start Challenge
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-xl-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-header bg-warning text-dark">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-database"></i> Stored XSS
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Learn stored XSS attacks where malicious scripts are stored on the server.</p>
+                        <div class="mb-3">
+                            <strong>Techniques:</strong>
+                            <div class="mt-1">
+                                <span class="badge bg-light text-dark me-1 mb-1">Comments</span>
+                                <span class="badge bg-light text-dark me-1 mb-1">User Profiles</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <a href="/xss/stored" class="btn btn-outline-warning w-100">
+                            <i class="fas fa-play"></i> Start Challenge
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-xl-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-window-maximize"></i> DOM-based XSS
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Practice DOM-based XSS attacks that occur entirely in the browser.</p>
+                        <div class="mb-3">
+                            <strong>Techniques:</strong>
+                            <div class="mt-1">
+                                <span class="badge bg-light text-dark me-1 mb-1">Client-side</span>
+                                <span class="badge bg-light text-dark me-1 mb-1">JavaScript</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <a href="/xss/dom" class="btn btn-outline-info w-100">
+                            <i class="fas fa-play"></i> Start Challenge
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-xl-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-filter"></i> Filter Bypass
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Learn techniques to bypass common XSS filters and WAFs.</p>
+                        <div class="mb-3">
+                            <strong>Techniques:</strong>
+                            <div class="mt-1">
+                                <span class="badge bg-light text-dark me-1 mb-1">Encoding</span>
+                                <span class="badge bg-light text-dark me-1 mb-1">Case Variation</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <a href="/xss/filter-bypass" class="btn btn-outline-success w-100">
+                            <i class="fas fa-play"></i> Start Challenge
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-xl-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-header bg-secondary text-white">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-cookie-bite"></i> Cookie XSS
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Practice XSS attacks involving cookies and session management.</p>
+                        <div class="mb-3">
+                            <strong>Techniques:</strong>
+                            <div class="mt-1">
+                                <span class="badge bg-light text-dark me-1 mb-1">Cookie Theft</span>
+                                <span class="badge bg-light text-dark me-1 mb-1">Session Hijacking</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <a href="/xss/cookie" class="btn btn-outline-secondary w-100">
+                            <i class="fas fa-play"></i> Start Challenge
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-xl-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-exchange-alt"></i> AJAX XSS
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Learn XSS attacks in AJAX applications and JSON responses.</p>
+                        <div class="mb-3">
+                            <strong>Techniques:</strong>
+                            <div class="mt-1">
+                                <span class="badge bg-light text-dark me-1 mb-1">JSON Response</span>
+                                <span class="badge bg-light text-dark me-1 mb-1">AJAX Calls</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <a href="/xss/ajax" class="btn btn-outline-primary w-100">
+                            <i class="fas fa-play"></i> Start Challenge
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="alert alert-warning">
+                    <h4><i class="fas fa-lightbulb"></i> Common XSS Payloads</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Basic Payloads:</h6>
+                            <div class="payload-example">
+                                <code>&lt;script&gt;alert('XSS')&lt;/script&gt;</code>
+                            </div>
+                            <div class="payload-example">
+                                <code>&lt;img src=x onerror=alert('XSS')&gt;</code>
+                            </div>
+                            <div class="payload-example">
+                                <code>&lt;svg onload=alert('XSS')&gt;</code>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Advanced Payloads:</h6>
+                            <div class="payload-example">
+                                <code>javascript:alert('XSS')</code>
+                            </div>
+                            <div class="payload-example">
+                                <code>&lt;iframe src="javascript:alert('XSS')"&gt;</code>
+                            </div>
+                            <div class="payload-example">
+                                <code>&lt;body onload=alert('XSS')&gt;</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-12">
+                <div class="alert alert-danger">
+                    <h4><i class="fas fa-exclamation-triangle"></i> XSS Impact</h4>
+                    <ul class="mb-0">
+                        <li><strong>Session Hijacking:</strong> Steal user session cookies</li>
+                        <li><strong>Keylogging:</strong> Capture user keystrokes</li>
+                        <li><strong>Phishing:</strong> Redirect users to malicious sites</li>
+                        <li><strong>Defacement:</strong> Modify website content</li>
+                        <li><strong>Malware Distribution:</strong> Deliver malicious payloads</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white text-center py-3 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2024 Bug Bounty Lab. Educational purposes only.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

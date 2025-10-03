@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-bug"></i> Bug Bounty Lab
+            </a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="/sql-injection">← Back to SQL Lab</a>
+                <a class="nav-link" href="/">Dashboard</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-12">
+                <h1><i class="fas fa-link"></i> Union-based SQL Injection</h1>
+                <p class="lead">Extract data from multiple tables using UNION SELECT statements.</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="card-title mb-0">Product Lookup</h5>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" action="/sql-injection/union">
+                            <div class="mb-3">
+                                <label for="id" class="form-label">Product ID</label>
+                                <input type="number" class="form-control" id="id" name="id" 
+                                       placeholder="Enter product ID" 
+                                       value="<%= id || '' %>" required>
+                            </div>
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-search"></i> Lookup Product
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <% if (sqlQuery) { %>
+                <div class="card mt-3">
+                    <div class="card-header bg-warning text-dark">
+                        <h6 class="card-title mb-0">
+                            <i class="fas fa-code"></i> Executed SQL Query
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="code-block">
+                            <%= sqlQuery %>
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+
+                <% if (sqlError) { %>
+                <div class="alert alert-danger mt-3">
+                    <h6><i class="fas fa-exclamation-triangle"></i> SQL Error</h6>
+                    <div class="code-block">
+                        <%= sqlError %>
+                    </div>
+                </div>
+                <% } %>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="card-title mb-0">Results</h5>
+                    </div>
+                    <div class="card-body">
+                        <% if (products && products.length > 0) { %>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Name</th>
+                                            <th>Description</th>
+                                            <th>Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% products.forEach(product => { %>
+                                            <tr>
+                                                <td><%= product.id %></td>
+                                                <td><%= product.name %></td>
+                                                <td><%= product.description %></td>
+                                                <td>$<%= product.price %></td>
+                                            </tr>
+                                        <% }); %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <% } else if (id) { %>
+                            <p class="text-muted">No product found with ID: <%= id %></p>
+                        <% } else { %>
+                            <p class="text-muted">Enter a product ID to see results</p>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="alert alert-info">
+                    <h4><i class="fas fa-lightbulb"></i> Union-based Injection Payloads</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Step 1 - Find Number of Columns:</h6>
+                            <div class="payload-example">
+                                <code>1 UNION SELECT 1,2,3,4 --</code>
+                            </div>
+                            <div class="payload-example">
+                                <code>1 UNION SELECT NULL,NULL,NULL,NULL --</code>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Step 2 - Extract Data:</h6>
+                            <div class="payload-example">
+                                <code>1 UNION SELECT username,password,3,4 FROM users --</code>
+                            </div>
+                            <div class="payload-example">
+                                <code>1 UNION SELECT name,sql,3,4 FROM sqlite_master --</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-12">
+                <div class="alert alert-warning">
+                    <h4><i class="fas fa-exclamation-triangle"></i> Union-based SQL Injection</h4>
+                    <p><strong>Technique:</strong> Uses UNION SELECT to combine results from different tables</p>
+                    <p><strong>Prerequisites:</strong> Must know the number of columns and their data types</p>
+                    <p><strong>Advantages:</strong> Can extract large amounts of data quickly</p>
+                    <p><strong>Detection:</strong> Look for UNION keywords in error messages or unexpected data in results</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white text-center py-3 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2024 Bug Bounty Lab. Educational purposes only.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

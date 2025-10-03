@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-bug"></i> Bug Bounty Lab
+            </a>
+            <div class="navbar-nav ms-auto">
+                <% if (user) { %>
+                    <span class="navbar-text me-3">Welcome, <%= user.username %>!</span>
+                    <a class="nav-link" href="/auth/logout">Logout</a>
+                <% } else { %>
+                    <a class="nav-link" href="/auth/login">Login</a>
+                <% } %>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="jumbotron bg-primary text-white p-5 rounded mb-4">
+                    <h1 class="display-4">
+                        <i class="fas fa-shield-alt"></i> Bug Bounty Lab
+                    </h1>
+                    <p class="lead">A comprehensive environment for practicing web application security testing and vulnerability discovery.</p>
+                    <hr class="my-4">
+                    <p>Practice various types of vulnerabilities commonly found in bug bounty programs in a safe, controlled environment.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <h2 class="mb-4">
+                    <i class="fas fa-list"></i> Available Challenges
+                </h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <% challenges.forEach(challenge => { %>
+                <div class="col-lg-6 col-xl-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-header bg-<%= challenge.id === 'sql-injection' ? 'danger' : challenge.id === 'xss' ? 'warning' : challenge.id === 'authentication' ? 'info' : challenge.id === 'file-upload' ? 'success' : challenge.id === 'csrf' ? 'secondary' : challenge.id === 'directory-traversal' ? 'dark' : 'primary' %> text-white">
+                            <h5 class="card-title mb-0">
+                                <i class="fas fa-<%= challenge.id === 'sql-injection' ? 'database' : challenge.id === 'xss' ? 'code' : challenge.id === 'authentication' ? 'key' : challenge.id === 'file-upload' ? 'upload' : challenge.id === 'csrf' ? 'exchange-alt' : challenge.id === 'directory-traversal' ? 'folder-open' : 'api' %>"></i>
+                                <%= challenge.title %>
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"><%= challenge.description %></p>
+                            <p class="text-muted small">
+                                <strong>Difficulty:</strong> <%= challenge.difficulty %>
+                            </p>
+                            <div class="mb-3">
+                                <strong>Vulnerabilities:</strong>
+                                <div class="mt-1">
+                                    <% challenge.vulnerabilities.forEach(vuln => { %>
+                                        <span class="badge bg-light text-dark me-1 mb-1"><%= vuln %></span>
+                                    <% }); %>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-transparent">
+                            <a href="<%= challenge.path %>" class="btn btn-outline-primary w-100">
+                                <i class="fas fa-play"></i> Start Challenge
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="alert alert-info">
+                    <h4><i class="fas fa-info-circle"></i> Getting Started</h4>
+                    <ul class="mb-0">
+                        <li>Each challenge includes detailed explanations and hints</li>
+                        <li>Start with beginner-level challenges and work your way up</li>
+                        <li>Use browser developer tools to inspect requests and responses</li>
+                        <li>Try different payloads and techniques for each vulnerability type</li>
+                        <li>Document your findings as you would in a real bug bounty report</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-12">
+                <div class="alert alert-warning">
+                    <h4><i class="fas fa-exclamation-triangle"></i> Safety Notice</h4>
+                    <p class="mb-0">This lab is designed for educational purposes only. All vulnerabilities are intentionally created and should only be used in this controlled environment. Never attempt these techniques on systems you don't own or don't have explicit permission to test.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white text-center py-3 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2024 Bug Bounty Lab. Educational purposes only.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

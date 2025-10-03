@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  bug-bounty-lab:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./uploads:/app/uploads
+      - ./database:/app/database
+    environment:
+      - NODE_ENV=development
+    restart: unless-stopped
+
+  # Optional: Add a vulnerable database for advanced SQL injection practice
+  vulnerable-db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: vulnerable_db
+      MYSQL_USER: testuser
+      MYSQL_PASSWORD: testpass
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: unless-stopped

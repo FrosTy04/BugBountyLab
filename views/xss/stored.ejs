@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-bug"></i> Bug Bounty Lab
+            </a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="/xss">← Back to XSS Lab</a>
+                <a class="nav-link" href="/">Dashboard</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-12">
+                <h1><i class="fas fa-database"></i> Stored XSS</h1>
+                <p class="lead">Learn stored XSS attacks where malicious scripts are stored on the server.</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-warning text-dark">
+                        <h5 class="card-title mb-0">Add Comment</h5>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" action="/xss/stored">
+                            <div class="mb-3">
+                                <label for="author_name" class="form-label">Your Name</label>
+                                <input type="text" class="form-control" id="author_name" name="author_name" 
+                                       placeholder="Enter your name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="content" class="form-label">Comment</label>
+                                <textarea class="form-control" id="content" name="content" rows="3" 
+                                          placeholder="Enter your comment" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-warning">
+                                <i class="fas fa-comment"></i> Post Comment
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="card-title mb-0">Comments</h5>
+                    </div>
+                    <div class="card-body">
+                        <% if (comments && comments.length > 0) { %>
+                            <% comments.forEach(comment => { %>
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <h6 class="card-title"><%= comment.author_name %></h6>
+                                        <p class="card-text"><%= comment.content %></p>
+                                        <small class="text-muted">
+                                            <i class="fas fa-clock"></i> <%= new Date(comment.created_at).toLocaleString() %>
+                                        </small>
+                                    </div>
+                                </div>
+                            <% }); %>
+                        <% } else { %>
+                            <p class="text-muted">No comments yet. Be the first to comment!</p>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="alert alert-warning">
+                    <h4><i class="fas fa-lightbulb"></i> Try These Payloads</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Basic Stored XSS:</h6>
+                            <div class="payload-example">
+                                <strong>Name:</strong> <code>Hacker</code><br>
+                                <strong>Comment:</strong> <code>&lt;script&gt;alert('Stored XSS')&lt;/script&gt;</code>
+                            </div>
+                            <div class="payload-example">
+                                <strong>Name:</strong> <code>&lt;img src=x onerror=alert('XSS')&gt;</code><br>
+                                <strong>Comment:</strong> <code>Nice post!</code>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Advanced Stored XSS:</h6>
+                            <div class="payload-example">
+                                <strong>Name:</strong> <code>User</code><br>
+                                <strong>Comment:</strong> <code>&lt;svg onload=alert('Stored XSS')&gt;</code>
+                            </div>
+                            <div class="payload-example">
+                                <strong>Name:</strong> <code>Admin</code><br>
+                                <strong>Comment:</strong> <code>&lt;iframe src="javascript:alert('XSS')"&gt;</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-12">
+                <div class="alert alert-danger">
+                    <h4><i class="fas fa-exclamation-triangle"></i> Stored XSS Details</h4>
+                    <p><strong>Type:</strong> Stored Cross-Site Scripting</p>
+                    <p><strong>Root Cause:</strong> User input is stored in the database and displayed without proper encoding or sanitization.</p>
+                    <p><strong>Impact:</strong> Persistent attack affecting all users, session hijacking, keylogging, phishing, and malware distribution.</p>
+                    <p><strong>Fix:</strong> Properly encode all user input before storing and displaying it in HTML context.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white text-center py-3 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2024 Bug Bounty Lab. Educational purposes only.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

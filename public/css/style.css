@@ -1,0 +1,204 @@
+/* Custom styles for Bug Bounty Lab */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+}
+
+.jumbotron {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.card {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    border: none;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.card-header {
+    border-bottom: none;
+}
+
+.badge {
+    font-size: 0.75em;
+}
+
+/* Challenge specific styles */
+.challenge-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.vulnerability-card {
+    border-left: 4px solid #dc3545;
+}
+
+.vulnerability-card.success {
+    border-left-color: #28a745;
+}
+
+.vulnerability-card.warning {
+    border-left-color: #ffc107;
+}
+
+.vulnerability-card.info {
+    border-left-color: #17a2b8;
+}
+
+/* Code blocks */
+.code-block {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 0.375rem;
+    padding: 1rem;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+    overflow-x: auto;
+}
+
+/* Payload examples */
+.payload-example {
+    background-color: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 0.375rem;
+    padding: 0.75rem;
+    margin: 0.5rem 0;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+}
+
+/* Success/Error messages */
+.alert-custom {
+    border-radius: 0.5rem;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Form styles */
+.form-control:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+.btn-custom {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.btn-custom:hover {
+    background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* Navigation */
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+/* Footer */
+footer {
+    margin-top: auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .jumbotron {
+        padding: 2rem 1rem;
+    }
+    
+    .display-4 {
+        font-size: 2rem;
+    }
+    
+    .card {
+        margin-bottom: 1rem;
+    }
+}
+
+/* Animation for loading states */
+.loading {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+/* Highlight vulnerable elements */
+.vulnerable {
+    background-color: #fff3cd !important;
+    border: 2px solid #ffc107 !important;
+    animation: highlight 2s ease-in-out;
+}
+
+@keyframes highlight {
+    0% { background-color: #fff3cd; }
+    50% { background-color: #ffeaa7; }
+    100% { background-color: #fff3cd; }
+}
+
+/* SQL injection specific styles */
+.sql-payload {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 0.375rem;
+    padding: 0.5rem;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+    color: #721c24;
+}
+
+/* XSS specific styles */
+.xss-payload {
+    background-color: #d1ecf1;
+    border: 1px solid #bee5eb;
+    border-radius: 0.375rem;
+    padding: 0.5rem;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+    color: #0c5460;
+}
+
+/* File upload specific styles */
+.upload-area {
+    border: 2px dashed #dee2e6;
+    border-radius: 0.5rem;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.upload-area:hover {
+    border-color: #667eea;
+    background-color: #f8f9fa;
+}
+
+.upload-area.dragover {
+    border-color: #667eea;
+    background-color: #e3f2fd;
+}
+
+/* API testing styles */
+.api-endpoint {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    padding: 1rem;
+    margin: 0.5rem 0;
+    font-family: 'Courier New', monospace;
+}
+
+.method-get { border-left: 4px solid #28a745; }
+.method-post { border-left: 4px solid #007bff; }
+.method-put { border-left: 4px solid #ffc107; }
+.method-delete { border-left: 4px solid #dc3545; }
